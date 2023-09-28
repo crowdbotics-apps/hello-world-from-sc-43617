@@ -15,7 +15,7 @@ const PostScreen = () => {
   };
 
   return <SafeAreaView style={styles.container}>
-      <TextInput style={styles.input} value={input} onChangeText={setInput} placeholder="Add post" />
+      <TextInput style={styles.input} value={input} onChangeText={setInput} placeholder="type new post..." />
       <Button title="Add Post" onPress={handleAddPost} />
       <FlatList data={posts} keyExtractor={(item, index) => index.toString()} renderItem={({
       item,
