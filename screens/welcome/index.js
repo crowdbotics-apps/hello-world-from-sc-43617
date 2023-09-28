@@ -1,64 +1,57 @@
-import React from "react"
-import {
-  View,
-  Image,
-  Text,
-  ScrollView,
-  SafeAreaView,
-  StyleSheet
-} from "react-native"
+import React, { useState } from 'react';
+import { View, TextInput, Button, SafeAreaView, FlatList, StyleSheet, Text, TouchableOpacity } from 'react-native';
 
-const WelcomeScreen = () => {
-  return (
-    <SafeAreaView style={styles.container}>
-      <ScrollView contentContainerStyle={styles.scrollView}>
-        <View style={styles.group} />
-        <View style={styles.group}>
-          <Image style={styles.logo} source={require("./logo.png")} />
-          <Text style={styles.text}>
-            Let's build something amazing together!
-          </Text>
-        </View>
-        <Text style={styles.footer}>Made with ❤️ by Crowdbotics</Text>
-      </ScrollView>
-    </SafeAreaView>
-  )
-}
+const ChecklistScreen = () => {
+  const [input, setInput] = useState('');
+  const [list, setList] = useState([]);
+
+  const handleAddItem = () => {
+    setList([...list, input]);
+    setInput('');
+  };
+
+  const handleDeleteItem = index => {
+    setList(list.filter((_, i) => i !== index));
+  };
+
+  return <SafeAreaView style={styles.container}>
+      <TextInput style={styles.input} value={input} onChangeText={setInput} placeholder="Add checklist item" />
+      <Button title="Add Item" onPress={handleAddItem} />
+      <FlatList data={list} keyExtractor={(item, index) => index.toString()} renderItem={({
+      item,
+      index
+    }) => <View style={styles.listItem}>
+            <Text>{item}</Text>
+            <TouchableOpacity onPress={() => handleDeleteItem(index)}>
+              <Text style={styles.deleteText}>Delete</Text>
+            </TouchableOpacity>
+          </View>} />
+    </SafeAreaView>;
+};
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#F8F8FC",
-    height: "100%"
-  },
-  scrollView: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "space-between",
     padding: 20
   },
-  group: {
-    alignItems: "center"
+  input: {
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 1,
+    marginBottom: 10,
+    padding: 10
   },
-  logo: {
-    height: 180,
-    width: 180,
-    padding: 40,
-    borderRadius: 30,
-    margin: 40
+  listItem: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    borderColor: 'gray',
+    borderWidth: 1,
+    marginBottom: 10,
+    padding: 10
   },
-  text: {
-    textAlign: "center",
-    fontSize: 28,
-    color: "#828AB0",
-    fontWeight: 700
-  },
-  footer: {
-    textAlign: "center",
-    fontSize: 18,
-    color: "#828AB0",
-    fontWeight: 700,
-    marginBottom: 20
+  deleteText: {
+    color: 'red'
   }
-})
-
-export default WelcomeScreen
+});
+export default ChecklistScreen;
