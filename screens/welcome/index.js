@@ -1,28 +1,28 @@
-import React, { useState } from 'react';
-import { View, TextInput, Button, SafeAreaView, FlatList, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import React, { useState } from "react";
+import { View, TextInput, Button, SafeAreaView, FlatList, StyleSheet, Text, TouchableOpacity } from "react-native";
 
-const ChecklistScreen = () => {
-  const [input, setInput] = useState('');
-  const [list, setList] = useState([]);
+const PostScreen = () => {
+  const [input, setInput] = useState("");
+  const [posts, setPosts] = useState([]);
 
-  const handleAddItem = () => {
-    setList([...list, input]);
-    setInput('');
+  const handleAddPost = () => {
+    setPosts([...posts, input]);
+    setInput("");
   };
 
-  const handleDeleteItem = index => {
-    setList(list.filter((_, i) => i !== index));
+  const handleDeletePost = index => {
+    setPosts(posts.filter((_, i) => i !== index));
   };
 
   return <SafeAreaView style={styles.container}>
-      <TextInput style={styles.input} value={input} onChangeText={setInput} placeholder="Add checklist item" />
-      <Button title="Add Item" onPress={handleAddItem} />
-      <FlatList data={list} keyExtractor={(item, index) => index.toString()} renderItem={({
+      <TextInput style={styles.input} value={input} onChangeText={setInput} placeholder="Add post" />
+      <Button title="Add Post" onPress={handleAddPost} />
+      <FlatList data={posts} keyExtractor={(item, index) => index.toString()} renderItem={({
       item,
       index
-    }) => <View style={styles.listItem}>
+    }) => <View style={styles.postItem}>
             <Text>{item}</Text>
-            <TouchableOpacity onPress={() => handleDeleteItem(index)}>
+            <TouchableOpacity onPress={() => handleDeletePost(index)}>
               <Text style={styles.deleteText}>Delete</Text>
             </TouchableOpacity>
           </View>} />
@@ -36,22 +36,22 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 40,
-    borderColor: 'gray',
+    borderColor: "gray",
     borderWidth: 1,
     marginBottom: 10,
     padding: 10
   },
-  listItem: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    borderColor: 'gray',
+  postItem: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    borderColor: "gray",
     borderWidth: 1,
     marginBottom: 10,
     padding: 10
   },
   deleteText: {
-    color: 'red'
+    color: "red"
   }
 });
-export default ChecklistScreen;
+export default PostScreen;
